@@ -2,6 +2,7 @@ import Image from "next/image";
 import image from "../asset/debos_image.jpg";
 // Add to your imports at the top of the file
 import { CodeXml, MapPin, Clock, Mail, Globe } from "lucide-react";
+import { HatchDivider } from "./HatchDivider";
 export default function Hero() {
   return (
     <section className="bg-background mt-10">
@@ -156,7 +157,7 @@ export default function Hero() {
           {/* Social links */}
       <div className="p-4">
         <div
-            className="absolute top-[525px] left-0 right-0 h-16 pointer-events-none border-y border-[lab(90.6853%_0.399232_-1.45452)]"
+            className="absolute top-[525px] left-0 right-0 h-16 pointer-events-none border-t border-[lab(90.6853%_0.399232_-1.45452)]"
             aria-hidden="true"
            
           />
@@ -236,6 +237,7 @@ export default function Hero() {
         </div>
         </div>
       </div>
+      <HatchDivider/>
     </section>
   );
 }
