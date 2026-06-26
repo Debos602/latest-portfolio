@@ -3,7 +3,7 @@ import { HatchDivider } from "./HatchDivider";
 
 export default function Contact() {
   return (
-    <section className=" text-center">
+    <section id="contact" className=" text-center">
       <div className='max-w-3xl mx-auto border-x border-[lab(90.6853%_0.399232_-1.45452)] py-12'>
         <h2 className="font-heading  text-3xl sm:text-4xl font-semibold tracking-tight mb-6">
         Let's work together

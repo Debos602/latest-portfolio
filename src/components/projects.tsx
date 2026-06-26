@@ -83,7 +83,7 @@ export default function Projects() {
   const visibleProjects = showAll ? MOCK_PROJECTS : MOCK_PROJECTS.slice(0, INITIAL_VISIBLE);
 
   return (
-    <section aria-labelledby="projects-heading" >
+    <section id="projects" aria-labelledby="projects-heading" >
       {/* Heading */}
       <div className="max-w-3xl mx-auto">
         <h2

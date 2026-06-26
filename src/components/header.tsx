@@ -21,25 +21,25 @@ export default function Header() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link
-                  href="#about"
+                  href="/#about"
                   className="hover:text-foreground/75 transition-colors duration-200 text-sm font-medium"
                 >
                   About
                 </Link>
                 <Link
-                  href="#projects"
+                  href="/#projects"
                   className="hover:text-foreground/75 transition-colors duration-200 text-sm font-medium"
                 >
                   Projects
                 </Link>
                 <Link
-                  href="#experience"
+                  href="/#experience"
                   className="hover:text-foreground/75 transition-colors duration-200 text-sm font-medium"
                 >
                   Experience
                 </Link>
                 <Link
-                  href="#certifications"
+                  href="/#certifications"
                   className="hover:text-foreground/75 transition-colors duration-200 text-sm font-medium"
                 >
                   Certifications
