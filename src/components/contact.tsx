@@ -1,17 +1,50 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HatchDivider } from "./HatchDivider";
 
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const elements = sectionRef.current?.querySelectorAll(".contact-reveal");
+
+      if (elements?.length) {
+        gsap.set(elements, { opacity: 0, y: 24, scale: 0.98 });
+        gsap.to(elements, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="contact" className=" text-center">
+    <section ref={sectionRef} id="contact" className="text-center">
       <div className='max-w-3xl mx-auto border-x border-[lab(90.6853%_0.399232_-1.45452)] py-12'>
-        <h2 className="font-heading  text-3xl sm:text-4xl font-semibold tracking-tight mb-6">
+        <h2 className="contact-reveal font-heading  text-3xl sm:text-4xl font-semibold tracking-tight mb-6">
         Let's work together
       </h2>
-      <p className="text-muted-foreground max-w-md mx-auto mb-8">
+      <p className="contact-reveal text-muted-foreground max-w-md mx-auto mb-8">
         I'm currently available for new projects. Let's discuss how we can build something amazing together.
       </p>
-      <div className="relative inline-block select-none">
+      <div className="contact-reveal relative inline-block select-none">
         <div style={{ perspective: '1000px', perspectiveOrigin: '50% 50%' }}>
           <div style={{
             position: 'relative',

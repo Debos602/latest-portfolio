@@ -1,8 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HatchDivider } from "./HatchDivider";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Project = {
   id: number;
@@ -71,8 +75,34 @@ const MOCK_PROJECTS: Project[] = [
 const INITIAL_VISIBLE = 3;
 
 export default function Projects() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [openProjectIds, setOpenProjectIds] = useState<number[]>([]);
   const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = sectionRef.current?.querySelectorAll(".project-card");
+
+      if (cards?.length) {
+        gsap.set(cards, { opacity: 0, y: 24, scale: 0.98 });
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   function toggleProject(id: number) {
     setOpenProjectIds((prev) =>
@@ -83,7 +113,7 @@ export default function Projects() {
   const visibleProjects = showAll ? MOCK_PROJECTS : MOCK_PROJECTS.slice(0, INITIAL_VISIBLE);
 
   return (
-    <section id="projects" aria-labelledby="projects-heading" >
+    <section ref={sectionRef} id="projects" aria-labelledby="projects-heading" >
       {/* Heading */}
       <div className="max-w-3xl mx-auto">
         <h2
@@ -100,7 +130,7 @@ export default function Projects() {
             const isOpen = openProjectIds.includes(project.id);
             return (
               <React.Fragment key={project.id}>
-                <article className={index !== 0 ? "border-t border-[lab(90.6853%_0.399232_-1.45452)]" : ""}>
+                <article className={`project-card ${index !== 0 ? "border-t border-[lab(90.6853%_0.399232_-1.45452)]" : ""}`}>
                   {/* Row header */}
                   <header className="flex items-center hover:bg-gray-50 transition-colors">
                     {/* Logo */}
@@ -201,7 +231,7 @@ export default function Projects() {
                           {project.previewImages.slice(0, 2).map((img, idx) => (
                             <div
                               key={idx}
-                              className="w-[140px] h-[110px] rounded-lg border border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden bg-gray-100"
+                              className="w-35 h-27.5 rounded-lg border border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden bg-gray-100"
                             >
                               <img
                                 src={img.src}

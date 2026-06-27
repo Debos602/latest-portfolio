@@ -1,8 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, ArrowUpRight, ChevronDown, ChevronsUpDown, CircleCheckBig } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HatchDivider } from "./HatchDivider";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Certification = {
   id: string;
@@ -90,7 +94,7 @@ function CertItem({ cert }: { cert: Certification }) {
   };
 
   return (
-    <div className="border-b border-[lab(90.6853%_0.399232_-1.45452)] transition-all duration-300 ease-in-out">
+    <div className="cert-card border-b border-[lab(90.6853%_0.399232_-1.45452)] transition-all duration-300 ease-in-out">
       <div className="group">
         <div className="flex items-center hover:bg-accent-muted">
           {/* Icon */}
@@ -195,11 +199,38 @@ function CertItem({ cert }: { cert: Certification }) {
 }
 
 export default function Certifications() {
+  const sectionRef = useRef<HTMLElement>(null);
   const [showAll, setShowAll] = useState(false);
   const visible = showAll ? certifications : certifications.slice(0, INITIAL_SHOW);
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const cards = sectionRef.current?.querySelectorAll(".cert-card");
+
+      if (cards?.length) {
+        gsap.set(cards, { opacity: 0, y: 24, scale: 0.98 });
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       data-slot="panel"
       // className="screen-line-top screen-line-bottom "
       id="certifications"
