@@ -1,4 +1,11 @@
+"use client";
+
 import { HatchDivider } from "./HatchDivider";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const stack = [
   {
@@ -54,8 +61,36 @@ const stack = [
 const lineColor = "border-[lab(90.6853%_0.399232_-1.45452)]";
 
 export default function Stack() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate tech stack items
+      const items = sectionRef.current?.querySelectorAll(".flex-wrap.gap-1\\.5 > li");
+      if (items?.length) {
+        gsap.set(items, { opacity: 0, y: 20, scale: 0.9 });
+        gsap.to(items, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.05,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="stack" className="bg-gradient-safe">
+    <section ref={sectionRef} id="stack" className="bg-gradient-safe">
       <div className={`max-w-3xl mx-auto border-x ${lineColor}`}>
         <h2 className={`border-b ${lineColor} px-4 text-3xl font-bold tracking-tight text-foreground`}>
           Tech Stack

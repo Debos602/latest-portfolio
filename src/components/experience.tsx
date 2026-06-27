@@ -1,8 +1,15 @@
 "use client";
 
+"use client";
+
 import Image from "next/image";
 import { CodeXml, Infinity as InfinityIcon } from "lucide-react";
 import { HatchDivider } from "./HatchDivider";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Position = {
   icon: React.ReactNode;
@@ -56,8 +63,34 @@ const experience: ExperienceGroup[] = [
 ];
 
 export default function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate experience positions
+      const positions = sectionRef.current?.querySelectorAll(".group\\/experience-position");
+      if (positions?.length) {
+        gsap.set(positions, { opacity: 0, x: -30 });
+        gsap.to(positions, {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          stagger: 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="experience" className="relative">
+    <section ref={sectionRef} id="experience" className="relative">
       <div className="max-w-3xl mx-auto border-x border-[lab(90.6853%_0.399232_-1.45452)]"> 
         <header className="py-0">
         <h2 className="px-4 font-heading text-3xl font-semibold tracking-tight border-b border-[lab(90.6853%_0.399232_-1.45452)] ">Experience</h2>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Link, ArrowUpRight, ChevronDown, ChevronsUpDown, CircleCheckBig } from "lucide-react";
 import { HatchDivider } from "./HatchDivider";
 
@@ -82,6 +81,13 @@ function GoogleIcon() {
 
 function CertItem({ cert }: { cert: Certification }) {
   const [open, setOpen] = useState(false);
+  const [imageSrc, setImageSrc] = useState(cert.image);
+
+  const handleImageError = () => {
+    if (imageSrc !== "/icons/code.svg") {
+      setImageSrc("/icons/code.svg");
+    }
+  };
 
   return (
     <div className="border-b border-[lab(90.6853%_0.399232_-1.45452)] transition-all duration-300 ease-in-out">
@@ -162,15 +168,15 @@ function CertItem({ cert }: { cert: Certification }) {
                 <button
                   type="button"
                   onClick={() => window.open(cert.link, "_blank")}
-                  className="relative aspect-[4/3] overflow-hidden rounded-md border border-[lab(90.6853%_0.399232_-1.45452)] cursor-pointer group/cert hover:scale-[1.02] transition-transform bg-muted"
+                  className="relative aspect-4/3 overflow-hidden rounded-md border border-[lab(90.6853%_0.399232_-1.45452)] cursor-pointer group/cert hover:scale-[1.02] transition-transform bg-muted"
                   aria-label="View certificate in full size"
                 >
-                  <Image
-                    src={cert.image}
+                  <img
+                    src={imageSrc}
                     alt={`${cert.title} certificate`}
-                    fill
-                    className="object-contain"
-                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                    onError={handleImageError}
                   />
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/cert:opacity-100 transition-opacity flex items-center justify-center">
                     <div className="flex flex-col items-center gap-2 text-white">
