@@ -76,6 +76,7 @@ const INITIAL_VISIBLE = 3;
 
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
+  const panelRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const [openProjectIds, setOpenProjectIds] = useState<number[]>([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -105,9 +106,79 @@ export default function Projects() {
   }, []);
 
   function toggleProject(id: number) {
+    const isOpening = !openProjectIds.includes(id);
+
     setOpenProjectIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
+
+    const panel = panelRefs.current[id];
+    if (!panel) return;
+
+    if (isOpening) {
+      // Get the actual height before animating
+      panel.style.visibility = "hidden";
+      panel.style.height = "auto";
+      const fullHeight = panel.offsetHeight;
+      panel.style.visibility = "visible";
+      panel.style.height = "0";
+
+      gsap.to(panel, {
+        height: fullHeight,
+        opacity: 1,
+        duration: 0.4,
+        ease: "cubic-bezier(0.23, 1, 0.320, 1)",
+        onStart: () => {
+          panel.style.overflow = "hidden";
+        },
+        onComplete: () => {
+          panel.style.overflow = "visible";
+          panel.style.height = "auto";
+        },
+      });
+
+      // Animate inner content
+      const content = panel.querySelectorAll(".project-detail-item");
+      if (content.length) {
+        gsap.fromTo(
+          content,
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            stagger: 0.05,
+            ease: "power2.out",
+            delay: 0.1,
+          }
+        );
+      }
+    } else {
+      gsap.to(panel, {
+        height: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: "cubic-bezier(0.770, 0, 0.175, 1)",
+        onStart: () => {
+          panel.style.overflow = "hidden";
+        },
+        onComplete: () => {
+          panel.style.overflow = "hidden";
+        },
+      });
+
+      // Animate out inner content
+      const content = panel.querySelectorAll(".project-detail-item");
+      if (content.length) {
+        gsap.to(content, {
+          opacity: 0,
+          y: -8,
+          duration: 0.2,
+          stagger: 0.03,
+          ease: "power2.in",
+        });
+      }
+    }
   }
 
   const visibleProjects = showAll ? MOCK_PROJECTS : MOCK_PROJECTS.slice(0, INITIAL_VISIBLE);
@@ -194,11 +265,14 @@ export default function Projects() {
                   {/* Expanded panel */}
                   {isOpen && (
                     <div
+                      ref={(node) => {
+                        panelRefs.current[project.id] = node;
+                      }}
                       id={"project-details-" + project.id}
                       className="border-t border-[lab(90.6853%_0.399232_-1.45452)] bg-gray-50 pt-4 pb-4"
                     >
                       {/* Two-column: description left, images right */}
-                      <div className="flex gap-4 px-4">
+                      <div className="flex gap-4 px-4 project-detail-item">
                         {/* Left: description + tags + result */}
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-gray-700 leading-relaxed mb-3">
@@ -244,10 +318,10 @@ export default function Projects() {
                       </div>
 
                       {/* Action buttons */}
-                      <div className="flex gap-2 mt-4 pt-3 border-t border-gray-200">
+                      <div className="flex gap-2 mt-4 pt-3 border-t border-gray-200 px-4 project-detail-item">
                         <a
                           href={project.projectUrl ?? "#"}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M7 17 17 7" /><path d="M7 7h10v10" />
@@ -256,7 +330,7 @@ export default function Projects() {
                         </a>
                         <button
                           type="button"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 transition-colors"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M7 17 17 7" /><path d="M7 7h10v10" />

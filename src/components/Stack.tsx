@@ -105,7 +105,7 @@ export default function Stack() {
           {stack.map((group) => (
             <div
               key={group.id}
-              className={`grid items-start gap-y-2 border-b ${lineColor} py-4 last:border-none sm:grid-cols-[var(--col-left-width)_1fr]`}
+              className={`grid items-start gap-y-2 border-b border-[lab(90.6853%_0.399232_-1.45452)] py-4 last:border-none sm:grid-cols-[var(--col-left-width)_1fr]`}
             >
               <div
                 id={group.id}
@@ -126,7 +126,7 @@ export default function Stack() {
                       rel="noopener noreferrer"
                       aria-label={item.name}
                       title={item.name}
-                      className="flex h-[var(--badge-height)] items-center justify-center gap-1.5 rounded-md bg-zinc-50/80 px-1.75 font-mono text-xs text-foreground inset-ring-1 inset-ring-border dark:bg-zinc-900/80"
+                      className="flex h-[var(--badge-height)] items-center justify-center gap-1.5 rounded-md bg-zinc-50/80 px-1.75 font-mono text-xs text-foreground border border-[lab(90.6853%_0.399232_-1.45452)] dark:bg-zinc-900/80"
                     >
                       <img
                         src={item.icon}
