@@ -143,8 +143,8 @@ function CertItem({ cert }: { cert: Certification }) {
 
         {/* Expanded panel */}
         <div
-          className="transition-all duration-300 ease-in-out overflow-hidden"
-          style={{ maxHeight: open ? "600px" : "0" }}
+          className="overflow-hidden"
+          style={{ maxHeight: open ? "600px" : "0", transition: "max-height 0.35s ease" }}
         >
           <div className="border-t border-[lab(90.6853%_0.399232_-1.45452)] p-4">
             <div className="pt-3">
@@ -182,7 +182,7 @@ function CertItem({ cert }: { cert: Certification }) {
                     loading="lazy"
                     onError={handleImageError}
                   />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/cert:opacity-100 transition-opacity flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/cert:opacity-100 transition-all duration-300 flex items-center justify-center">
                     <div className="flex flex-col items-center gap-2 text-white">
                       <ArrowUpRight className="size-8" aria-hidden="true" />
                       <span className="text-sm font-medium">Click to enlarge</span>
@@ -206,22 +206,49 @@ export default function Certifications() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = sectionRef.current?.querySelectorAll(".cert-card");
+      const header = sectionRef.current?.querySelector("[data-slot=panel-title]");
+      const toggle = sectionRef.current?.querySelector("button[type=button]");
 
       if (cards?.length) {
-        gsap.set(cards, { opacity: 0, y: 24, scale: 0.98 });
+        gsap.set(cards, {
+          opacity: 0,
+          y: 40,
+          scale: 0.94,
+          rotateX: 12,
+          transformOrigin: "center",
+        });
+
         gsap.to(cards, {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power2.out",
+          rotateX: 0,
+          duration: 0.75,
+          stagger: 0.12,
+          ease: "power4.out",
+          transformPerspective: 700,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
         });
+      }
+
+      if (header) {
+        gsap.fromTo(
+          header,
+          { opacity: 0, y: -12 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", delay: 0.1 }
+        );
+      }
+
+      if (toggle) {
+        gsap.fromTo(
+          toggle,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", delay: 0.2 }
+        );
       }
     }, sectionRef);
 

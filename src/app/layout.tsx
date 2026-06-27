@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/layout";
+import RouteTransition from "@/components/RouteTransition";
 import ScrollToHash from "@/components/ScrollToHash";
 
 const geistSans = Geist({
@@ -31,7 +32,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col mt-2">
         <ScrollToHash />
-        <Layout>{children}</Layout>
+        <Layout>
+          <RouteTransition>{children}</RouteTransition>
+        </Layout>
       </body>
     </html>
   );

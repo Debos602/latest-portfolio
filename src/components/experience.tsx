@@ -1,4 +1,3 @@
-"use client";
 
 "use client";
 
@@ -67,23 +66,77 @@ export default function Experience() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate experience positions
+      const header = sectionRef.current?.querySelectorAll(".experience-header");
+      const groups = sectionRef.current?.querySelectorAll(".experience-group");
       const positions = sectionRef.current?.querySelectorAll(".group\\/experience-position");
-      if (positions?.length) {
-        gsap.set(positions, { opacity: 0, x: -30 });
-        gsap.to(positions, {
-          opacity: 1,
-          x: 0,
+      const tags = sectionRef.current?.querySelectorAll(".experience-tag");
+
+      // Build a single timeline so animations feel cohesive and smooth
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      if (header?.length) {
+        tl.from(header, {
+          y: 8,
+          opacity: 0,
           duration: 0.6,
-          stagger: 0.2,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
+          ease: "power3.out",
         });
       }
+
+      if (groups?.length) {
+        tl.from(groups, {
+          y: 10,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.12,
+          ease: "power3.out",
+        }, "-=" + 0.4);
+      }
+
+      if (positions?.length) {
+        tl.from(positions, {
+          x: -24,
+          opacity: 0,
+          duration: 0.55,
+          stagger: 0.08,
+          ease: "power2.out",
+        }, "-=" + 0.45);
+      }
+
+      if (tags?.length) {
+        // tags pop in with a little scale for tactile feel
+        tl.from(tags, {
+          scale: 0.92,
+          opacity: 0,
+          duration: 0.45,
+          stagger: 0.02,
+          ease: "back.out(1.2)",
+        }, "-=" + 0.35);
+      }
+
+      // subtle hover effect for buttons (prefers-reduced-motion friendly)
+      const buttons = sectionRef.current?.querySelectorAll(".experience-button");
+      buttons?.forEach((btn) => {
+        gsap.fromTo(
+          btn,
+          { scale: 1 },
+          {
+            scale: 1.01,
+            duration: 0.18,
+            paused: true,
+            ease: "power1.out",
+            onReverseComplete: () => gsap.set(btn, { scale: 1 }),
+          }
+        );
+        btn.addEventListener("pointerenter", () => gsap.to(btn, { scale: 1.02, duration: 0.18 }));
+        btn.addEventListener("pointerleave", () => gsap.to(btn, { scale: 1, duration: 0.18 }));
+      });
     });
 
     return () => ctx.revert();
@@ -93,12 +146,12 @@ export default function Experience() {
     <section ref={sectionRef} id="experience" className="relative">
       <div className="max-w-3xl mx-auto border-x border-[lab(90.6853%_0.399232_-1.45452)]"> 
         <header className="py-0">
-        <h2 className="px-4 font-heading text-3xl font-semibold tracking-tight border-b border-[lab(90.6853%_0.399232_-1.45452)] ">Experience</h2>
+        <h2 className="experience-header px-4 font-heading text-3xl font-semibold tracking-tight border-b border-[lab(90.6853%_0.399232_-1.45452)] ">Experience</h2>
       </header>
 
       <div className="p-4">
         {experience.map((group) => (
-          <div key={group.name} className="space-y-4 border-b border-[lab(90.6853%_0.399232_-1.45452)] p-4 last:border-none">
+          <div key={group.name} className="experience-group space-y-4 border-b border-[lab(90.6853%_0.399232_-1.45452)] p-4 last:border-none">
             <div className="flex items-center gap-3">
               <div className="flex size-6 shrink-0 items-center justify-center">
                 <Image src={group.logo} alt="" width={24} height={24} className="rounded-full" aria-hidden="true" />
@@ -119,7 +172,7 @@ export default function Experience() {
 
                   <button
                     type="button"
-                    className="group relative block w-full text-left outline-none before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-7 before:-z-1 before:rounded-lg before:transition-[background-color] before:ease-out hover:before:bg-accent-muted focus-visible:before:inset-ring-2 focus-visible:before:inset-ring-ring/50"
+                    className="experience-button group relative block w-full text-left outline-none before:absolute before:-top-1 before:-right-1 before:-bottom-1.5 before:left-7 before:-z-1 before:rounded-lg before:transition-[background-color] before:ease-out hover:before:bg-accent-muted focus-visible:before:inset-ring-2 focus-visible:before:inset-ring-ring/50"
                   >
                     <div className="relative z-1 mb-1 flex items-center gap-3">
                       <div className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-muted-foreground/15 bg-muted text-muted-foreground ring-1 ring-line ring-offset-1 ring-offset-background">
@@ -157,7 +210,7 @@ export default function Experience() {
                   <ul className="flex flex-wrap gap-1.5 pt-3 pl-9">
                     {position.tags.map((tag) => (
                       <li key={tag} className="flex">
-                        <span className="inline-flex items-center rounded-full border bg-zinc-50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground dark:bg-zinc-900">{tag}</span>
+                        <span className="experience-tag inline-flex items-center rounded-full border bg-zinc-50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground dark:bg-zinc-900">{tag}</span>
                       </li>
                     ))}
                   </ul>

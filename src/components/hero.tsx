@@ -110,7 +110,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="bg-background mt-10">
+    <section id="home" className="bg-background mt-10">
       <div className="max-w-3xl border-x border-[lab(90.6853%_0.399232_-1.45452)] mx-auto">
         <div className="mx-auto">
           {/* Logo */}
