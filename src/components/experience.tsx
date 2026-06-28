@@ -30,12 +30,12 @@ type ExperienceGroup = {
 const experience: ExperienceGroup[] = [
   {
     logo: "/icons/code.svg",
-    name: "Freelance & Personal Projects",
+    name: "Quantum os dao llc",
     current: true,
     positions: [
       {
         icon: <CodeXml className="size-4" aria-hidden="true" />,
-        title: "Independent Web Developer",
+        title: "Full Stack Developer",
         type: "Full-time",
         start: "2025",
         end: null,
