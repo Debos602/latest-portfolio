@@ -149,7 +149,7 @@ export default function Experience() {
         <h2 className="experience-header px-4 font-heading text-3xl font-semibold tracking-tight border-b border-[lab(90.6853%_0.399232_-1.45452)] ">Experience</h2>
       </header>
 
-      <div className="p-0 md:p-4">
+      <div>
         {experience.map((group) => (
           <div key={group.name} className="experience-group space-y-4 border-b border-[lab(90.6853%_0.399232_-1.45452)] p-4 last:border-none">
             <div className="flex items-center gap-3">
