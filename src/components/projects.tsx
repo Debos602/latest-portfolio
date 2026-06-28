@@ -32,6 +32,7 @@ const MOCK_PROJECTS: Project[] = [
     previewImages: [
       { src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085", alt: "Developer workspace" },
       { src: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4", alt: "Code editor preview" },
+      { src: "https://images.unsplash.com/photo-1551836022-1b6356dcd02c", alt: "UI design mockup" },
     ],
   },
   {
@@ -44,6 +45,7 @@ const MOCK_PROJECTS: Project[] = [
     previewImages: [
       { src: "https://images.unsplash.com/photo-1555066931-4365d14bab8c", alt: "Programming screen" },
       { src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6", alt: "Laptop coding setup" },
+      { src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f", alt: "Dashboard analytics" },
     ],
   },
   {
@@ -56,6 +58,7 @@ const MOCK_PROJECTS: Project[] = [
     previewImages: [
       { src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d", alt: "Team collaboration" },
       { src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3", alt: "UI design preview" },
+      { src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085", alt: "Workspace concept" },
     ],
   },
   {
@@ -68,6 +71,7 @@ const MOCK_PROJECTS: Project[] = [
     previewImages: [
       { src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d", alt: "Modern office workspace" },
       { src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97", alt: "Frontend development setup" },
+      { src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085", alt: "Design board" },
     ],
   },
 ];
@@ -181,7 +185,11 @@ export default function Projects() {
     }
   }
 
-  const visibleProjects = showAll ? MOCK_PROJECTS : MOCK_PROJECTS.slice(0, INITIAL_VISIBLE);
+  const visibleProjects = React.useMemo(
+    () => (showAll ? MOCK_PROJECTS : MOCK_PROJECTS.slice(0, INITIAL_VISIBLE)),
+    [showAll]
+  );
+
 
   return (
     <section ref={sectionRef} id="projects" aria-labelledby="projects-heading" >
@@ -300,20 +308,29 @@ export default function Projects() {
                           )}
                         </div>
 
-                        {/* Right: preview image grid */}
-                        <div className="flex flex-wrap gap-2 sm:flex-col sm:w-[150px]">
-                          {project.previewImages.slice(0, 2).map((img, idx) => (
-                            <div
-                              key={idx}
-                              className="w-full min-h-[120px] rounded-lg border border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden bg-gray-100 sm:h-28"
-                            >
-                              <img
-                                src={img.src}
-                                alt={img.alt}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          ))}
+                        {/* Right: preview image marquee */}
+                        <div className="relative w-full flex-1 overflow-hidden rounded-lg border border-[lab(90.6853%_0.399232_-1.45452)] bg-gray-100 h-52 sm:w-[280px] sm:h-44">
+                          <div className="flex h-full animate-marquee gap-2">
+                            {[...project.previewImages, ...project.previewImages].map((img, idx) => (
+                              <button
+                                key={`${img.src}-${idx}`}
+                                type="button"
+                                className="relative w-64 shrink-0 overflow-hidden cursor-pointer group/proj bg-transparent p-1 h-full"
+                                aria-label={`Preview ${idx % project.previewImages.length + 1}`}
+                              >
+                                <img
+                                  src={img.src}
+                                  alt={img.alt}
+                                  className="object-cover w-full h-full border border-[lab(90.6853%_0.399232_-1.45452)]"
+                                />
+                                <div className="absolute inset-1 bg-black/50 opacity-0 group-hover/proj:opacity-100 transition-opacity flex items-center justify-center">
+                                  <svg viewBox="0 0 24 24" aria-hidden="true" className="size-6 text-white">
+                                    <path d="M7 17L17 7M17 7H7M17 7v10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                  </svg>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </div>
 

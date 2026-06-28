@@ -211,7 +211,7 @@ export default function Certifications() {
 
       if (cards?.length) {
         gsap.set(cards, {
-          opacity: 0,
+          opacity: 1,
           y: 40,
           scale: 0.94,
           rotateX: 12,
