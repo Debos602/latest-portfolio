@@ -105,7 +105,7 @@ function CertItem({ cert }: { cert: Certification }) {
           </div>
 
           {/* Content */}
-          <div className="flex-1 min-w-0 border-l border-dashed border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden">
+          <div className="flex-1 min-w-0 border-l border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden">
             <button
               type="button"
               onClick={() => setOpen((p) => !p)}
@@ -128,13 +128,13 @@ function CertItem({ cert }: { cert: Certification }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground [&_svg]:pointer-events-none"
+                className="relative flex size-6 shrink-0 items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors after:absolute after:-inset-2 hover:text-foreground [&_svg]:pointer-events-none"
                 aria-label="Open certification link"
               >
                 <Link className="size-4" aria-hidden="true" />
               </a>
 
-              <div className="shrink-0 text-muted-foreground">
+              <div className="p-1.5 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                 <ChevronsUpDown className="size-4 text-muted-foreground" aria-hidden="true" />
               </div>
             </button>

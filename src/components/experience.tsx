@@ -210,7 +210,7 @@ export default function Experience() {
                   <ul className="flex flex-wrap gap-1.5 pt-3 pl-0 md:pl-9">
                     {position.tags.map((tag) => (
                       <li key={tag} className="flex">
-                        <span className="experience-tag inline-flex items-center rounded-full border bg-zinc-50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground dark:bg-zinc-900">{tag}</span>
+                        <span className="experience-tag inline-flex items-center rounded-full border border-[lab(90.6853%_0.399232_-1.45452)] bg-zinc-50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground dark:bg-zinc-900">{tag}</span>
                       </li>
                     ))}
                   </ul>
