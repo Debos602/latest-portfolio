@@ -146,6 +146,47 @@ section[id],
   position: relative;
 }
 
+.animated-resume-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #111111 0%, #1f1f1f 100%);
+}
+
+.animated-resume-button::before,
+.animated-resume-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.animated-resume-button::before {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.animated-resume-button::after {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  opacity: 0.6;
+  transform: translateX(-100%) skewX(-15deg);
+  animation: slideBorder 2.4s linear infinite;
+}
+
+@keyframes slideBorder {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(100%) skewX(-15deg);
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateX(240%) skewX(-15deg);
+    opacity: 0.6;
+  }
+}
+
 .screen-line-bottom {
   position: relative;
   display: flex;
