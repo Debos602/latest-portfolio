@@ -149,7 +149,7 @@ export default function Experience() {
         <h2 className="experience-header px-4 font-heading text-3xl font-semibold tracking-tight border-b border-[lab(90.6853%_0.399232_-1.45452)] ">Experience</h2>
       </header>
 
-      <div className="p-4">
+      <div className="p-0 md:p-4">
         {experience.map((group) => (
           <div key={group.name} className="experience-group space-y-4 border-b border-[lab(90.6853%_0.399232_-1.45452)] p-4 last:border-none">
             <div className="flex items-center gap-3">
@@ -207,7 +207,7 @@ export default function Experience() {
                     </div>
                   </button>
 
-                  <ul className="flex flex-wrap gap-1.5 pt-3 pl-9">
+                  <ul className="flex flex-wrap gap-1.5 pt-3 pl-0 md:pl-9">
                     {position.tags.map((tag) => (
                       <li key={tag} className="flex">
                         <span className="experience-tag inline-flex items-center rounded-full border bg-zinc-50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground dark:bg-zinc-900">{tag}</span>

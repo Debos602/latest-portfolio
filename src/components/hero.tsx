@@ -169,8 +169,8 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="w-full text-center sm:text-left">
-              <h1 ref={nameRef} className="flex items-center justify-center sm:justify-start gap-2 py-1.5 pl-0 sm:pl-4 font-heading text-3xl sm:text-3xl font-semibold leading-none tracking-tight border-y border-[lab(90.6853%_0.399232_-1.45452)] text-foreground">
+            <div className="w-full text-start">
+              <h1 ref={nameRef} className="flex items-start md:items-center justify-start gap-2 py-1.5 pl-0 sm:pl-4 font-heading text-3xl sm:text-3xl font-semibold leading-none tracking-tight border-y border-[lab(90.6853%_0.399232_-1.45452)] text-foreground">
                 Debos Das
                 <svg
                   className="h-6 w-6 text-[#1d9bf0] flex-none"
@@ -199,7 +199,7 @@ export default function Hero() {
           </div>
 
           <div
-            className="absolute top-[310px] sm:top-[365px] left-0 right-0 h-8 pointer-events-none border-y border-[lab(90.6853%_0.399232_-1.45452)]"
+            className="hidden md:block absolute top-[280px] sm:top-[365px] left-0 right-0 h-8 pointer-events-none border-y border-[lab(90.6853%_0.399232_-1.45452)]"
             aria-hidden="true"
             style={{
               backgroundImage:
@@ -207,7 +207,7 @@ export default function Hero() {
             }}
           />
 
-          <div className="p-4 mt-8 sm:mt-[34px] space-y-2.5">
+          <div className="p-4 mt-2 md:mt-8 space-y-2.5">
             <div ref={infoGridRef} className="grid gap-x-4 gap-y-3 sm:grid-cols-2">
               <div className="sm:col-span-2">
                 <div className="flex items-center gap-4 font-mono text-sm">

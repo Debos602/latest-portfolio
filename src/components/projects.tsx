@@ -217,8 +217,8 @@ export default function Projects() {
 
                     {/* Info */}
                     <div className="flex-1 min-w-0 p-4 border-l border-[lab(90.6853%_0.399232_-1.45452)]">
-                      <h3 className="text-md font-semibold text-gray-900 leading-tight">{project.title}</h3>
-                      <p className="text-gray-500 text-balance truncate mt-0.5">{project.description}</p>
+                      <h3 className=" text-[14px] md:text-md font-semibold text-gray-900 leading-tight">{project.title}</h3>
+                      <p className="text-gray-500 text-[14px] text-balance truncate mt-0.5">{project.description}</p>
                     </div>
 
                     {/* Actions */}
@@ -272,7 +272,7 @@ export default function Projects() {
                       className="border-t border-[lab(90.6853%_0.399232_-1.45452)] bg-gray-50 pt-4 pb-4"
                     >
                       {/* Two-column: description left, images right */}
-                      <div className="flex gap-4 px-4 project-detail-item">
+                      <div className="flex flex-col gap-4 px-4 project-detail-item sm:flex-row">
                         {/* Left: description + tags + result */}
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-gray-700 leading-relaxed mb-3">
@@ -280,7 +280,7 @@ export default function Projects() {
                           </p>
 
                           {/* Tech tags */}
-                          <div className="flex gap-1.5 flex-wrap mb-4">
+                          <div className="flex flex-wrap gap-1.5 mb-4">
                             {project.techStack.map((t) => (
                               <span
                                 key={t}
@@ -301,11 +301,11 @@ export default function Projects() {
                         </div>
 
                         {/* Right: preview image grid */}
-                        <div className="shrink-0 flex gap-2">
+                        <div className="flex flex-wrap gap-2 sm:flex-col sm:w-[150px]">
                           {project.previewImages.slice(0, 2).map((img, idx) => (
                             <div
                               key={idx}
-                              className="w-35 h-27.5 rounded-lg border border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden bg-gray-100"
+                              className="w-full min-h-[120px] rounded-lg border border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden bg-gray-100 sm:h-28"
                             >
                               <img
                                 src={img.src}
@@ -318,7 +318,7 @@ export default function Projects() {
                       </div>
 
                       {/* Action buttons */}
-                      <div className="flex gap-2 mt-4 pt-3 border-t border-gray-200 px-4 project-detail-item">
+                      <div className="flex flex-col gap-2 mt-4 pt-3 border-t border-gray-200 px-4 project-detail-item sm:flex-row sm:items-center">
                         <a
                           href={project.projectUrl ?? "#"}
                           className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
