@@ -279,15 +279,15 @@ export default function Certifications() {
           ))}
         </div>
 
-        <div className="-mt-px flex h-12 items-center justify-center">
+        <div className=" flex items-center justify-center">
           <button
             type="button"
             onClick={() => setShowAll((p) => !p)}
-            className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-secondary px-3 pl-3 pr-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80"
+            className="group my-2 inline-flex items-center justify-center gap-2 rounded-md border border-[lab(90.6853%_0.399232_-1.45452)] bg-background px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-gray-50 hover:text-gray-900"
           >
             <span>{showAll ? "Show Less" : "Show More"}</span>
             <ChevronDown
-              className={`size-4 transition-transform ${showAll ? "rotate-180" : ""}`}
+              className={`size-4 transition-transform duration-200 group-hover:translate-y-0.5 ${showAll ? "rotate-180" : ""}`}
               aria-hidden="true"
             />
           </button>

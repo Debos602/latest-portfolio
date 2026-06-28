@@ -492,13 +492,13 @@ export default function Projects() {
 
           {/* Show More button */}
           {MOCK_PROJECTS.length > INITIAL_VISIBLE && (
-            <div className="border-t border-gray-200">
+            <div className="border-t border-[lab(90.6853%_0.399232_-1.45452)] bg-white/80">
               <button
                 type="button"
                 onClick={() => setShowAll((v) => !v)}
-                className="w-full flex items-center justify-center gap-1.5 py-3 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors " 
+                className="group mx-auto my-2 flex items-center justify-center gap-2 rounded-md border border-[lab(90.6853%_0.399232_-1.45452)] bg-background px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-gray-50 hover:text-gray-900"
               >
-                {showAll ? "Show Less" : "Show More"}
+                <span>{showAll ? "Show Less" : "Show More"}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
@@ -509,7 +509,7 @@ export default function Projects() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className={"transition-transform duration-200 " + (showAll ? "rotate-180" : "")}
+                  className={"transition-transform duration-200 group-hover:translate-y-0.5 " + (showAll ? "rotate-180" : "")}
                   aria-hidden="true"
                 >
                   <path d="m6 9 6 6 6-6" />
