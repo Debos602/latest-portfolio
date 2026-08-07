@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Link, ArrowUpRight, ChevronDown, ChevronsUpDown, CircleCheckBig } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronsUpDown, CircleCheckBig, X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HatchDivider } from "./HatchDivider";
@@ -20,56 +20,24 @@ type Certification = {
 
 const certifications: Certification[] = [
   {
-    id: "ai-fundamentals",
-    title: "AI Fundamentals",
-    issuer: "Google",
-    date: "05.25.2026",
-    link: "https://coursera.org/share/b87a837a1d6f32923fa4d008984ec028",
-    image: "/ai_fun_coursera/1.png",
-    icon: "google",
+    id: "programming-hero-web-development",
+    title: "Programming Hero Web Development Certification",
+    issuer: "Programming Hero",
+    date: "06.19.2026",
+    link: "https://www.programminghero.com/",
+    image: "/certifications/cert-2.pdf",
+    icon: "check",
   },
   {
-    id: "k8s-monitoring",
-    title: "Monitoring a Kubernetes Cluster",
-    issuer: "Datadog",
-    date: "05.20.2026",
-    link: "https://learn.datadoghq.com/certificates/a0dgd4rxvu",
-    image: "/datadog/John Kylle Pantorilla - 2026-05-20 - 1_page-0001.jpg",
-  },
-  {
-    id: "dd-integrations",
-    title: "Getting Started with Integrations",
-    issuer: "Datadog",
-    date: "May 20, 2026",
-    link: "https://learn.datadoghq.com/certificates/vob3g0twi4",
-    image: "/datadog/John Kylle Pantorilla - 2026-05-20 -Getting Started with Integrations.png",
-  },
-  {
-    id: "devkada",
-    title: "DevKada Hackathon Participation",
-    issuer: "DevKada",
-    date: "03.29.2026",
-    link: "/devkada_cert/John Kylle H. Pantorilla.png",
-    image: "/devkada_cert/John Kylle H. Pantorilla.png",
-  },
-  {
-    id: "claude-code",
-    title: "Claude Code in Action",
-    issuer: "Anthropic",
-    date: "March 29, 2026",
-    link: "http://verify.skilljar.com/c/mwfczzr4tcco",
-    image: "/anthropic/certificate-mwfczzr4tcco-1774794685_page-0001.jpg",
-  },
-  {
-    id: "ccep",
-    title: "Certified Cybersecurity Educator Professional (CCEP)",
-    issuer: "Red Team Leaders",
-    date: "12.29.2025",
-    link: "https://courses.redteamleaders.com/exam-completion/c16e1f8a4dcfb896",
-    image: "/red-team/certified_certificate_page-0001.jpg",
-  },
+    id: "bachelor-of-business-studies",
+    title: "Bachelor of Business Studies",
+    issuer: "National University",
+    date: "12.28.2022",
+    link: "https://www.nu.ac.bd/",
+    image: "/certifications/cert-1.pdf",
+    icon: "check",
+  }
 ];
-
 const INITIAL_SHOW = 3;
 
 function GoogleIcon() {
@@ -83,12 +51,90 @@ function GoogleIcon() {
   );
 }
 
+/** Fullscreen modal that shows the certificate (PDF or image) enlarged */
+function CertificateModal({
+  cert,
+  imageSrc,
+  isPdf,
+  onClose,
+}: {
+  cert: Certification;
+  imageSrc: string;
+  isPdf: boolean;
+  onClose: () => void;
+}) {
+  // close on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 sm:p-8"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${cert.title} certificate enlarged view`}
+    >
+      <div
+        className="relative flex h-full w-full max-w-4xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-[lab(90.6853%_0.399232_-1.45452)] px-4 py-3">
+          <div className="min-w-0">
+            <h3 className="truncate font-medium">{cert.title}</h3>
+            <p className="truncate text-xs text-[#3D4047]">
+              {cert.issuer} | {cert.date}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="ml-4 flex size-8 shrink-0 items-center justify-center rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"
+            aria-label="Close"
+          >
+            <X className="size-5" aria-hidden="true" />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="flex-1 overflow-auto bg-muted">
+          {isPdf ? (
+            <iframe
+              src={imageSrc}
+              title={`${cert.title} certificate large view`}
+              className="h-full min-h-[70vh] w-full bg-white"
+            />
+          ) : (
+            <img
+              src={imageSrc}
+              alt={`${cert.title} certificate large view`}
+              className="h-full w-full object-contain"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CertItem({ cert }: { cert: Certification }) {
   const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState(cert.image);
+  const isPdf = imageSrc.toLowerCase().endsWith(".pdf");
 
   const handleImageError = () => {
-    if (imageSrc !== "/icons/code.svg") {
+    if (!isPdf && imageSrc !== "/icons/code.svg") {
       setImageSrc("/icons/code.svg");
     }
   };
@@ -106,9 +152,17 @@ function CertItem({ cert }: { cert: Certification }) {
 
           {/* Content */}
           <div className="flex-1 min-w-0 border-l border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden">
-            <button
-              type="button"
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => setOpen((p) => !p)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setOpen((p) => !p);
+                }
+              }}
+              aria-expanded={open}
               className="flex w-full items-center gap-2 p-4 pr-2 text-left"
             >
               <div className="flex-1 min-w-0">
@@ -128,16 +182,30 @@ function CertItem({ cert }: { cert: Certification }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="relative flex size-6 shrink-0 items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors after:absolute after:-inset-2 hover:text-foreground [&_svg]:pointer-events-none"
-                aria-label="Open certification link"
+                className="p-1.5 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                aria-label={`Open ${cert.title}`}
               >
-                <Link className="size-4" aria-hidden="true" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                </svg>
               </a>
 
               <div className="p-1.5 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                 <ChevronsUpDown className="size-4 text-muted-foreground" aria-hidden="true" />
               </div>
-            </button>
+            </div>
           </div>
         </div>
 
@@ -155,33 +223,41 @@ function CertItem({ cert }: { cert: Certification }) {
                     <p><span className="font-medium text-foreground">Date:</span> {cert.date}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <a
-                      href={cert.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => setModalOpen(true)}
                       className="inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 bg-foreground text-background text-xs font-semibold hover:bg-foreground/80 transition-all border border-line shrink-0"
                     >
                       <ArrowUpRight className="size-3.5" aria-hidden="true" />
                       <span className="hidden sm:inline">View Certificate</span>
                       <span className="sm:hidden">View</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
 
-                {/* Certificate image */}
+                {/* Certificate image — click to enlarge in modal */}
                 <button
                   type="button"
-                  onClick={() => window.open(cert.link, "_blank")}
+                  onClick={() => setModalOpen(true)}
                   className="relative aspect-4/3 overflow-hidden rounded-md border border-[lab(90.6853%_0.399232_-1.45452)] cursor-pointer group/cert hover:scale-[1.02] transition-transform bg-muted"
                   aria-label="View certificate in full size"
                 >
-                  <img
-                    src={imageSrc}
-                    alt={`${cert.title} certificate`}
-                    className="h-full w-full object-contain"
-                    loading="lazy"
-                    onError={handleImageError}
-                  />
+                  {isPdf ? (
+                    <iframe
+                      src={imageSrc}
+                      title={`${cert.title} certificate`}
+                      className="h-full w-full min-h-[320px] bg-white"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <img
+                      src={imageSrc}
+                      alt={`${cert.title} certificate`}
+                      className="h-full w-full object-contain"
+                      loading="lazy"
+                      onError={handleImageError}
+                    />
+                  )}
                   <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/cert:opacity-100 transition-all duration-300 flex items-center justify-center">
                     <div className="flex flex-col items-center gap-2 text-white">
                       <ArrowUpRight className="size-8" aria-hidden="true" />
@@ -194,6 +270,15 @@ function CertItem({ cert }: { cert: Certification }) {
           </div>
         </div>
       </div>
+
+      {modalOpen && (
+        <CertificateModal
+          cert={cert}
+          imageSrc={imageSrc}
+          isPdf={isPdf}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
