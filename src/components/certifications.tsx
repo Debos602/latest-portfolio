@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { ArrowUpRight, ChevronDown, ChevronsUpDown, CircleCheckBig, X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -52,6 +53,7 @@ function GoogleIcon() {
 }
 
 /** Fullscreen modal that shows the certificate (PDF or image) enlarged */
+/** Fullscreen modal that shows the certificate (PDF or image) enlarged */
 function CertificateModal({
   cert,
   imageSrc,
@@ -63,43 +65,54 @@ function CertificateModal({
   isPdf: boolean;
   onClose: () => void;
 }) {
-  // close on Escape
+  // Close on Escape + prevent background scrolling
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
+
     window.addEventListener("keydown", onKey);
+
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
   }, [onClose]);
 
-  return (
+  // Render modal directly into <body>
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 sm:p-8"
+      className="fixed inset-0 z-[9999] h-dvh w-screen bg-black/70"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={`${cert.title} certificate enlarged view`}
     >
       <div
-        className="relative flex h-full w-full max-w-4xl flex-col overflow-hidden rounded-lg bg-white shadow-2xl"
+        className="relative flex h-dvh w-screen flex-col overflow-hidden bg-white"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-[lab(90.6853%_0.399232_-1.45452)] px-4 py-3">
+        <div className="flex shrink-0 items-center justify-between border-b border-gray-200 px-4 py-3">
           <div className="min-w-0">
-            <h3 className="truncate font-medium">{cert.title}</h3>
+            <h3 className="truncate font-medium">
+              {cert.title}
+            </h3>
+
             <p className="truncate text-xs text-[#3D4047]">
               {cert.issuer} | {cert.date}
             </p>
           </div>
+
           <button
             type="button"
             onClick={onClose}
-            className="ml-4 flex size-8 shrink-0 items-center justify-center rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors"
+            className="ml-4 flex size-8 shrink-0 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
             aria-label="Close"
           >
             <X className="size-5" aria-hidden="true" />
@@ -107,12 +120,12 @@ function CertificateModal({
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-auto bg-muted">
+        <div className="min-h-0 flex-1 overflow-auto bg-muted">
           {isPdf ? (
             <iframe
               src={imageSrc}
               title={`${cert.title} certificate large view`}
-              className="h-full min-h-[70vh] w-full bg-white"
+              className="h-full w-full border-0 bg-white"
             />
           ) : (
             <img
@@ -123,7 +136,8 @@ function CertificateModal({
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
