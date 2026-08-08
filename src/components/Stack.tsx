@@ -13,47 +13,135 @@ const stack = [
     number: "01",
     label: "Modern Web Applications",
     items: [
-      { name: "Next.js", href: "https://nextjs.org", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
-      { name: "React", href: "https://react.dev", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
-      { name: "TypeScript", href: "https://www.typescriptlang.org", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
-      { name: "Tailwind CSS", href: "https://tailwindcss.com", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
-      { name: "PostgreSQL", href: "https://www.postgresql.org", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
-      { name: "Supabase", href: "https://supabase.com", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" },
-      { name: "Chart.js", href: "https://www.chartjs.org", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/chartjs/chartjs-original.svg" },
+      {
+        name: "Next.js",
+        href: "https://nextjs.org",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
+      },
+      {
+        name: "React",
+        href: "https://react.dev",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
+      },
+      {
+        name: "TypeScript",
+        href: "https://www.typescriptlang.org",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
+      },
+      {
+        name: "Tailwind CSS",
+        href: "https://tailwindcss.com",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+      },
+      {
+        name: "PostgreSQL",
+        href: "https://www.postgresql.org",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
+      },
+      {
+        name: "Supabase",
+        href: "https://supabase.com",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg",
+      },
+      {
+        name: "Neon DB",
+        href: "https://neon.com",
+        icon: "https://cdn.simpleicons.org/neon",
+      },
+      {
+        name: "Chart.js",
+        href: "https://www.chartjs.org",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/chartjs/chartjs-original.svg",
+      },
     ],
   },
+
   {
     id: "stack-ai-automation",
     number: "02",
     label: "AI & Automation",
     items: [
-      { name: "OpenAI", href: "https://openai.com", icon: "https://unpkg.com/@lobehub/icons-static-svg@latest/icons/openai.svg" },
-      { name: "Anthropic", href: "https://www.anthropic.com", icon: "https://unpkg.com/@lobehub/icons-static-svg@latest/icons/anthropic.svg" },
-      { name: "AI Agents", href: "https://en.wikipedia.org/wiki/Intelligent_agent", icon: "/icons/ai-agents.svg" },
-      { name: "RAG Systems", href: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation", icon: "/icons/rag-systems.svg" },
+      {
+        name: "OpenAI",
+        href: "https://openai.com",
+        icon: "https://unpkg.com/@lobehub/icons-static-svg@latest/icons/openai.svg",
+      },
+      {
+        name: "Anthropic",
+        href: "https://www.anthropic.com",
+        icon: "https://unpkg.com/@lobehub/icons-static-svg@latest/icons/anthropic.svg",
+      },
+      {
+        name: "AI Agents",
+        href: "https://en.wikipedia.org/wiki/Intelligent_agent",
+        icon: "/icons/ai-agents.svg",
+      },
+      {
+        name: "RAG Systems",
+        href: "https://en.wikipedia.org/wiki/Retrieval-augmented_generation",
+        icon: "/icons/rag-systems.svg",
+      },
     ],
   },
+
   {
     id: "stack-payments-business-systems",
     number: "03",
     label: "Payments & Business Systems",
     items: [
-      { name: "Stripe", href: "https://stripe.com", icon: "https://cdn.simpleicons.org/stripe" },
-      { name: "PayMongo", href: "https://paymongo.com", icon: "https://upload.wikimedia.org/wikipedia/commons/3/34/PayMongo_Logo.svg" },
-      { name: "Resend", href: "https://resend.com", icon: "https://cdn.simpleicons.org/resend" },
-      { name: "PostHog", href: "https://posthog.com", icon: "https://cdn.simpleicons.org/posthog" },
+      {
+        name: "Stripe",
+        href: "https://stripe.com",
+        icon: "https://cdn.simpleicons.org/stripe",
+      },
+      {
+        name: "PayMongo",
+        href: "https://paymongo.com",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/3/34/PayMongo_Logo.svg",
+      },
+      {
+        name: "Resend",
+        href: "https://resend.com",
+        icon: "https://cdn.simpleicons.org/resend",
+      },
+      {
+        name: "PostHog",
+        href: "https://posthog.com",
+        icon: "https://cdn.simpleicons.org/posthog",
+      },
     ],
   },
+
   {
     id: "stack-deployment-infrastructure",
     number: "04",
     label: "Deployment & Infrastructure",
     items: [
-      { name: "Vercel", href: "https://vercel.com", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" },
-      { name: "Node.js", href: "https://nodejs.org", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
-      { name: "Prisma", href: "https://www.prisma.io", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg" },
-      { name: "Datadog", href: "https://www.datadoghq.com", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/datadog/datadog-original.svg" },
-      { name: "Kubernetes", href: "https://kubernetes.io", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg" },
+      {
+        name: "Vercel",
+        href: "https://vercel.com",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg",
+      },
+      {
+        name: "Node.js",
+        href: "https://nodejs.org",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
+      },
+      {
+        name: "Prisma",
+        href: "https://www.prisma.io",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg",
+      },
+      {
+        name: "Datadog",
+        href: "https://www.datadoghq.com",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/datadog/datadog-original.svg",
+      },
+      {
+        name: "Kubernetes",
+        href: "https://kubernetes.io",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg",
+      },
     ],
   },
 ];

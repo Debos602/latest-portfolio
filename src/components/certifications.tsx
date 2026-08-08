@@ -351,7 +351,7 @@ export default function Certifications() {
        <header data-slot="panel-header" className="py-0">
         <h2 data-slot="panel-title" className="font-heading text-3xl px-4 font-semibold tracking-tight border-b border-[lab(90.6853%_0.399232_-1.45452)]">
           Certifications
-          <sup className="top-[-0.75em] ml-1 text-sm font-medium tracking-normal text-muted-foreground">
+          <sup className="top-[-0.75em] ml-1 text-sm font-medium tracking-normal text-gray-400">
             [{certifications.length}]
           </sup>
         </h2>

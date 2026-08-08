@@ -285,10 +285,12 @@ export default function Projects() {
       <div className="max-w-3xl mx-auto">
         <h2
           id="projects-heading"
-          className="font-heading text-3xl font-semibold flex items-center gap-2 border-x border-[lab(90.6853%_0.399232_-1.45452)] px-4"
+          className="font-heading text-3xl font-semibold flex items-center gap-1 border-x border-[lab(90.6853%_0.399232_-1.45452)] px-4"
         >
           Projects
-          <span className="text-sm font-normal text-gray-400">[{MOCK_PROJECTS.length}]</span>
+          <span className="relative top-[-0.25em] text-sm font-normal text-gray-400">
+          [{MOCK_PROJECTS.length}]
+        </span>
         </h2>
 
         {/* Project list */}
