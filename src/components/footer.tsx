@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="overflow-x-hidden px-2">
-      <div className="mx-auto border-t border-[lab(90.6853%_0.399232_-1.45452)] ">
+      <div className="mx-auto">
         <div className="border-b border-[lab(90.6853%_0.399232_-1.45452)] flex w-full before:z-1 after:z-1">
           <div className="mx-auto flex items-center justify-center bg-background px-4">
 

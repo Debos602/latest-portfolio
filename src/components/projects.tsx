@@ -292,7 +292,7 @@ export default function Projects() {
         </h2>
 
         {/* Project list */}
-        <div className="border border-[lab(90.6853%_0.399232_-1.45452)] overflow-hidden">
+        <div className="border border-[lab(90.6853%_0.399232_-1.45452)] border-b-0 overflow-hidden">
           {visibleProjects.map((project, index) => {
             const isOpen = openProjectIds.includes(project.id);
             return (
